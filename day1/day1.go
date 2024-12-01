@@ -64,18 +64,18 @@ func parseInput(r io.Reader) ([]int, []int, error) {
 			continue
 		}
 
-		parts := strings.Split(scanner.Text(), " ")
+		parts := strings.Split(scanner.Text(), "   ")
 
 		lpart := parts[0]
-		rpart := parts[len(parts)-1]
+		rpart := parts[1]
 
-		l, err := strconv.ParseInt(strings.TrimSpace(lpart), 10, 32)
+		l, err := strconv.ParseInt(lpart, 10, 32)
 		if err != nil {
 			return nil, nil, err
 		}
 		left = append(left, int(l))
 
-		r, err := strconv.ParseInt(strings.TrimSpace(rpart), 10, 32)
+		r, err := strconv.ParseInt(rpart, 10, 32)
 		if err != nil {
 			return nil, nil, err
 		}
