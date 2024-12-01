@@ -2,7 +2,6 @@ package day1
 
 import (
 	"bufio"
-	"errors"
 	"io"
 	"slices"
 	"strconv"
@@ -32,7 +31,24 @@ func Puzzle1(r io.Reader) (int, error) {
 }
 
 func Puzzle2(r io.Reader) (int, error) {
-	return 0, errors.New("unsolved")
+	left, right, err := parseInput(r)
+	if err != nil {
+		return 0, err
+	}
+
+	incidence := make(map[int]int)
+	for _, num := range right {
+		count, _ := incidence[num]
+		incidence[num] = count + 1
+	}
+
+	similarity := 0
+	for _, num := range left {
+		score, _ := incidence[num]
+		similarity += num * score
+	}
+
+	return similarity, nil
 }
 
 // parseInput consumes the reader line-by-line, parsing a left and right number
