@@ -1,6 +1,7 @@
 package testutil
 
 import (
+	"fmt"
 	"io"
 	"os"
 	"testing"
@@ -19,4 +20,6 @@ func TestPuzzle(t *testing.T, puzzle PuzzleFunc, filename string, want int) {
 
 	require.NoError(t, err)
 	require.Equal(t, want, answer)
+
+	fmt.Printf("Answer = %v\n", answer)
 }
