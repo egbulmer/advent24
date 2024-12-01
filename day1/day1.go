@@ -59,26 +59,16 @@ func parseInput(r io.Reader) ([]int, []int, error) {
 
 	scanner := bufio.NewScanner(r)
 	for scanner.Scan() {
-		line := scanner.Text()
-		if len(strings.TrimSpace(line)) == 0 {
+		parts := strings.Fields(scanner.Text())
+		if len(parts) == 0 {
+			// Line is empty.
 			continue
 		}
 
-		parts := strings.Split(scanner.Text(), "   ")
+		l, _ := strconv.Atoi(parts[0])
+		r, _ := strconv.Atoi(parts[1])
 
-		lpart := parts[0]
-		rpart := parts[1]
-
-		l, err := strconv.ParseInt(lpart, 10, 32)
-		if err != nil {
-			return nil, nil, err
-		}
 		left = append(left, int(l))
-
-		r, err := strconv.ParseInt(rpart, 10, 32)
-		if err != nil {
-			return nil, nil, err
-		}
 		right = append(right, int(r))
 	}
 
