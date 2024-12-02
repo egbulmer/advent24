@@ -15,9 +15,9 @@ func TestPuzzle1(t *testing.T) {
 }
 
 func TestPuzzle2Sample(t *testing.T) {
-	util.TestPuzzle(t, Puzzle2, "sample.txt", 0)
+	util.TestPuzzle(t, Puzzle2, "sample.txt", 4)
 }
 
 func TestPuzzle2(t *testing.T) {
-	util.TestPuzzle(t, Puzzle2, "input.txt", 0)
+	util.TestPuzzle(t, Puzzle2, "input.txt", 566)
 }

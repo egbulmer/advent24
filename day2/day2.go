@@ -2,8 +2,8 @@ package day2
 
 import (
 	"bufio"
-	"errors"
 	"io"
+	"slices"
 	"strconv"
 	"strings"
 
@@ -15,7 +15,7 @@ func Puzzle1(r io.Reader) (int, error) {
 	answer := 0
 
 	for _, report := range reports {
-		if isSafe(report) {
+		if isSafeStrict(report) {
 			answer += 1
 		}
 	}
@@ -24,10 +24,19 @@ func Puzzle1(r io.Reader) (int, error) {
 }
 
 func Puzzle2(r io.Reader) (int, error) {
-	return 0, errors.New("unsolved")
+	reports := parseInput(r)
+	answer := 0
+
+	for _, report := range reports {
+		if isSafeWithDampener(report) {
+			answer += 1
+		}
+	}
+
+	return answer, nil
 }
 
-func isSafe(report []int) bool {
+func isSafeStrict(report []int) bool {
 	dirn := util.SignInt(report[1] - report[0])
 
 	if dirn == 0 {
@@ -49,6 +58,21 @@ func isSafe(report []int) bool {
 	}
 
 	return true
+}
+
+func isSafeWithDampener(report []int) bool {
+	if isSafeStrict(report) {
+		return true
+	}
+
+	for i := 0; i < len(report); i++ {
+		modified := slices.Concat(report[:i], report[i+1:])
+		if isSafeStrict(modified) {
+			return true
+		}
+	}
+
+	return false
 }
 
 func parseInput(r io.Reader) [][]int {
