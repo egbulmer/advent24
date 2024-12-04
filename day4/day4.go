@@ -20,9 +20,8 @@ func Puzzle2(r io.Reader) (int, error) {
 }
 
 type puzzle struct {
-	data  []byte
-	w, h  int
-	found map[vec2]struct{}
+	data []byte
+	w, h int
 }
 
 type vec2 struct {
@@ -40,10 +39,9 @@ const (
 	SW
 )
 
-var DNE = errors.New("does not exist")
+var ErrDNE = errors.New("does not exist")
 
 var xmas = []byte("XMAS")
-var samx = []byte("SAMX")
 
 var directions = []vec2{
 	{0, -1},
@@ -73,12 +71,12 @@ func newPuzzle(input string) puzzle {
 		h += 1
 	}
 
-	return puzzle{data, w, h, make(map[vec2]struct{})}
+	return puzzle{data, w, h}
 }
 
 func (p puzzle) charAt(pos vec2) (byte, error) {
 	if pos.x < 0 || pos.x >= p.w || pos.y < 0 || pos.y >= p.h {
-		return 0, DNE
+		return 0, ErrDNE
 	}
 	return p.data[pos.x*p.w+pos.y], nil
 }
@@ -96,7 +94,7 @@ func (p puzzle) scan(pos vec2) int {
 func (p puzzle) findXmas(pos vec2, dirn vec2) bool {
 	for i := 0; i < 4; i++ {
 		ch, err := p.charAt(pos)
-		if err == DNE {
+		if err == ErrDNE {
 			return false
 		}
 
